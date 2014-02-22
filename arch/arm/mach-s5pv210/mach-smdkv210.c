@@ -116,18 +116,18 @@ static struct samsung_keypad_platdata smdkv210_keypad_data __initdata = {
 
 static struct resource smdkv210_dm9000_resources[] = {
 	[0] = {
-		.start	= S5PV210_PA_SROM_BANK5,
-		.end	= S5PV210_PA_SROM_BANK5,
+		.start	= S5PV210_PA_SROM_BANK1,
+		.end	= S5PV210_PA_SROM_BANK1 + 3,
 		.flags	= IORESOURCE_MEM,
 	},
 	[1] = {
-		.start	= S5PV210_PA_SROM_BANK5 + 2,
-		.end	= S5PV210_PA_SROM_BANK5 + 2,
+		.start	= S5PV210_PA_SROM_BANK1 + (1<<2),
+		.end	= S5PV210_PA_SROM_BANK1 + (1<<2) + 3,
 		.flags	= IORESOURCE_MEM,
 	},
 	[2] = {
-		.start	= IRQ_EINT(9),
-		.end	= IRQ_EINT(9),
+		.start	= IRQ_EINT(7),
+		.end	= IRQ_EINT(7),
 		.flags	= IORESOURCE_IRQ | IORESOURCE_IRQ_HIGHLEVEL,
 	},
 };
@@ -278,16 +278,16 @@ static void __init smdkv210_dm9000_init(void)
 {
 	unsigned int tmp;
 
-	gpio_request(S5PV210_MP01(5), "nCS5");
-	s3c_gpio_cfgpin(S5PV210_MP01(5), S3C_GPIO_SFN(2));
-	gpio_free(S5PV210_MP01(5));
+	gpio_request(S5PV210_MP01(1), "nCS1");
+	s3c_gpio_cfgpin(S5PV210_MP01(1), S3C_GPIO_SFN(2));
+	gpio_free(S5PV210_MP01(1));
 
-	tmp = (5 << S5P_SROM_BCX__TACC__SHIFT);
-	__raw_writel(tmp, S5P_SROM_BC5);
+	tmp = ((0<<28)|(0<<24)|(5<<16)|(0<<12)|(0<<8)|(0<<4)|(0<<0));
+	__raw_writel(tmp, S5P_SROM_BC1);
 
 	tmp = __raw_readl(S5P_SROM_BW);
-	tmp &= (S5P_SROM_BW__CS_MASK << S5P_SROM_BW__NCS5__SHIFT);
-	tmp |= (1 << S5P_SROM_BW__NCS5__SHIFT);
+	tmp &= (S5P_SROM_BW__CS_MASK << S5P_SROM_BW__NCS1__SHIFT);
+	tmp |= (1<<4)|(1<<5);
 	__raw_writel(tmp, S5P_SROM_BW);
 }
 
