@@ -62,10 +62,10 @@
  */
 static u8 user_rmmod;
 
-static char *lbs_helper_name = NULL;
+static char *lbs_helper_name = "/lib/firmware/marvell/helper_sd.bin";
 module_param_named(helper_name, lbs_helper_name, charp, 0644);
 
-static char *lbs_fw_name = NULL;
+static char *lbs_fw_name = "/lib/firmware/marvell/sd8686.bin";
 module_param_named(fw_name, lbs_fw_name, charp, 0644);
 
 static const struct sdio_device_id if_sdio_ids[] = {

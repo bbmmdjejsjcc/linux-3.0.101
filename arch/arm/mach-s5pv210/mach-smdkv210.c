@@ -45,6 +45,7 @@
 #include <plat/pm.h>
 #include <plat/fb.h>
 #include <plat/s5p-time.h>
+#include <plat/sdhci.h>
 
 /* Following are default values for UCON, ULCON and UFCON UART registers */
 #define SMDKV210_UCON_DEFAULT	(S3C2410_UCON_TXILEVEL |	\
@@ -318,6 +319,10 @@ static void __init smdkv210_map_io(void)
 	s5p_set_timer_source(S5P_PWM2, S5P_PWM4);
 }
 
+static struct s3c_sdhci_platdata smdkv210_hsmmc2_pdata __initdata = {
+	.cd_type = S3C_SDHCI_CD_PERMANENT,
+};
+
 static void __init smdkv210_machine_init(void)
 {
 	s3c_pm_init();
@@ -342,6 +347,8 @@ static void __init smdkv210_machine_init(void)
 	s3c_fb_set_platdata(&smdkv210_lcd0_pdata);
 
 	platform_add_devices(smdkv210_devices, ARRAY_SIZE(smdkv210_devices));
+
+	s3c_sdhci2_set_platdata(&smdkv210_hsmmc2_pdata);
 }
 
 MACHINE_START(SMDKV210, "SMDKV210")
