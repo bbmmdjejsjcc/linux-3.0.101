@@ -134,4 +134,9 @@
 
 #define S5P_SZ_UART			SZ_256
 
+/* USB EHCI */
+#define S5PV210_PA_EHCI		(0xEC200000)
+#define S5P_PA_EHCI			S5PV210_PA_EHCI
+#define S5P_SZ_EHCI			SZ_1M
+
 #endif /* __ASM_ARCH_MAP_H */

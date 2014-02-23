@@ -46,6 +46,7 @@
 #include <plat/fb.h>
 #include <plat/s5p-time.h>
 #include <plat/sdhci.h>
+#include <plat/ehci.h>
 
 /* Following are default values for UCON, ULCON and UFCON UART registers */
 #define SMDKV210_UCON_DEFAULT	(S3C2410_UCON_TXILEVEL |	\
@@ -250,6 +251,16 @@ static struct platform_device smdkv210_backlight_device = {
 	},
 };
 
+/* USB EHCI */
+static struct s5p_ehci_platdata smdkv210_ehci_pdata;
+
+static void __init smdkv210_ehci_init(void)
+{
+	struct s5p_ehci_platdata *pdata = &smdkv210_ehci_pdata;
+
+	s5p_ehci_set_platdata(pdata);
+}
+
 static struct platform_device *smdkv210_devices[] __initdata = {
 	&s3c_device_adc,
 	&s3c_device_cfcon,
@@ -273,6 +284,8 @@ static struct platform_device *smdkv210_devices[] __initdata = {
 	&smdkv210_lcd_lte480wv,
 	&s3c_device_timer[3],
 	&smdkv210_backlight_device,
+	/* USB EHCI */
+	&s5p_device_ehci,
 };
 
 static void __init smdkv210_dm9000_init(void)
@@ -346,9 +359,12 @@ static void __init smdkv210_machine_init(void)
 
 	s3c_fb_set_platdata(&smdkv210_lcd0_pdata);
 
-	platform_add_devices(smdkv210_devices, ARRAY_SIZE(smdkv210_devices));
+	/* USB EHCI */
+	smdkv210_ehci_init();
 
 	s3c_sdhci2_set_platdata(&smdkv210_hsmmc2_pdata);
+
+	platform_add_devices(smdkv210_devices, ARRAY_SIZE(smdkv210_devices));
 }
 
 MACHINE_START(SMDKV210, "SMDKV210")

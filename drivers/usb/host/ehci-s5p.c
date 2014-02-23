@@ -14,7 +14,7 @@
 
 #include <linux/clk.h>
 #include <linux/platform_device.h>
-#include <mach/regs-pmu.h>
+//#include <mach/regs-pmu.h>
 #include <plat/cpu.h>
 #include <plat/ehci.h>
 #include <plat/usb-phy.h>
@@ -87,7 +87,7 @@ static int __devinit s5p_ehci_probe(struct platform_device *pdev)
 	}
 
 	s5p_ehci->hcd = hcd;
-	s5p_ehci->clk = clk_get(&pdev->dev, "usbhost");
+	s5p_ehci->clk = clk_get(&pdev->dev, "usb-host");
 
 	if (IS_ERR(s5p_ehci->clk)) {
 		dev_err(&pdev->dev, "Failed to get usbhost clock\n");

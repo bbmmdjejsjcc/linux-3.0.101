@@ -24,8 +24,8 @@ static struct resource s5p_ehci_resource[] = {
 		.flags	= IORESOURCE_MEM,
 	},
 	[1] = {
-		.start	= IRQ_USB_HOST,
-		.end	= IRQ_USB_HOST,
+		.start	= IRQ_UHOST,
+		.end	= IRQ_UHOST,
 		.flags	= IORESOURCE_IRQ,
 	}
 };
